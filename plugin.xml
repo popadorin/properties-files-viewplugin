@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            name=" my Hello World category"
+            id="com.dorin.myplugin.view.mycategory">
+      </category>
+      <view
+            name="My hello world view"
+            icon="icons/sample.gif"
+            category="com.dorin.myplugin.view.mycategory"
+            class="com.dorin.myplugin.views.SampleView"
+            id="com.dorin.myplugin.view.myview">
+      </view>
+   </extension>
+
+</plugin>
