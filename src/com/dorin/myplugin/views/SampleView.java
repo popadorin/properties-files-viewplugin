@@ -1,6 +1,5 @@
 package com.dorin.myplugin.views;
 
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.part.ViewPart;
@@ -18,10 +17,9 @@ public class SampleView extends ViewPart {
 		System.out.println("The createPartControl method is called");
 		
 		new MyComposite(parent, SWT.RESIZE);
-		
+
 	}
-
-
+	
 	public void setFocus() {
 		System.out.println("The setFocus is called");
 	}
