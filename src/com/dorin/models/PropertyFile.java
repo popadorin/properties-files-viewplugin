@@ -34,7 +34,7 @@ public class PropertyFile {
 		    
 	} 
 	
-	public IResource getResource() {
+	public IFile getFile() {
 		return file;
 	}
 	

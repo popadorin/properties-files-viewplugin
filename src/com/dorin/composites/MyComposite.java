@@ -108,30 +108,25 @@ public class MyComposite extends Composite {
 		Point pt = new Point(event.x, event.y);
         TableItem item = table.getItem(pt);
         if (item == null)
-      	  return;
-        
-        for (int i = 0; i < titles.length; i++) {
-      	  Rectangle rect = item.getBounds(i);
-      	  
-      	  if (rect.contains(pt)) {
-      		  int index = table.indexOf(item);
-      		  if (i == 0) {
-      			  System.out.println("Item " + index + "-" + i);
-	        		  System.out.println("filename: " + item.getText(0));
-	        		  System.out.println("projectname: " + item.getText(1));
-	        		  
-	        		  for (PropertyFile file : files) {
-	        			  if (file.getName().equals(item.getText(0)) && file.getProjectName().equals(item.getText(1))) {
-	        				  file.open();
-	        			  }
-	        		  }
-      		  }
-      		  
-      		  
-      	  }
-        }
-        
-        System.out.println("Double clicked");
+        	return;
+		
+	  	Rectangle rect = item.getBounds(0);
+	  
+	  	if (rect.contains(pt)) {
+		        		  
+			for (PropertyFile file : files) {
+				if (selectedItemIsFile(item, file)) {
+					file.open();
+				}
+			}
+  		  
+	  	}
+
+	}
+	
+	private boolean selectedItemIsFile(TableItem item, PropertyFile file) {
+		return file.getName().equals(item.getText(0)) && 
+				file.getProjectName().equals(item.getText(1));
 	}
 	
 	
