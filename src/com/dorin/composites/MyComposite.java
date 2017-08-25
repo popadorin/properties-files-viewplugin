@@ -3,28 +3,28 @@ package com.dorin.composites;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceVisitor;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.ide.IDE;
 
 import com.dorin.models.PropertyFile;
 
 public class MyComposite extends Composite {
 	private Table table;
+	private String[] titles;
 	private List<PropertyFile> files = new ArrayList<>();
 	/**
 	 * Create the composite.
@@ -39,19 +39,26 @@ public class MyComposite extends Composite {
 		btnNewButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-//				loadFiles();
+				
 			}
 		});
 		btnNewButton.setBounds(10, 25, 75, 25);
 		btnNewButton.setText("New file");
 		
 		table = new Table(this, SWT.MULTI | SWT.BORDER | SWT.FULL_SELECTION);
-		table.setBounds(10, 56, 200, 200);
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseDoubleClick(MouseEvent event) {
+				openFileOn(event);
+			}
+		});
+		
+		table.setBounds(10, 56, 100, 200);
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
 		
 		
-		String[] titles = { "File name", "Project"};
+		titles = new String[] {"File name", "Project"};
 	    for (int i = 0; i < titles.length; i++) {
 	      TableColumn column = new TableColumn(table, SWT.NONE);
 	      column.setText(titles[i]);
@@ -61,15 +68,14 @@ public class MyComposite extends Composite {
 	        TableItem item = new TableItem(table, SWT.NONE);
 	        item.setText(0, files.get(i).getName());
 	        item.setText(1, files.get(i).getProjectName());
-//	        item.setText(2, "actions");
 	    }
 	    
-	    for (int i=0; i<titles.length; i++) {
+	    for (int i = 0; i < titles.length; i++) {
 	        table.getColumn(i).pack();
 	    }   
 		
 	    table.setSize(table.computeSize(SWT.DEFAULT, 200));
-	    
+	
 	}
 
 	private void loadFiles() {
@@ -84,8 +90,7 @@ public class MyComposite extends Composite {
 						
 						System.out.println("resource name: " + resource.getName());
 						System.out.println("resource project: " + resource.getProject());
-						IFile file = (IFile) resource;
-//						openFile(file);
+						
 					}
 					
 					return true;
@@ -99,15 +104,36 @@ public class MyComposite extends Composite {
 		}
 	}
 	
-	private void openFile(IFile file) {
-	    IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-	    try {
-			IDE.openEditor(page, file);
-		} catch (PartInitException e) {
-			System.out.println("The partInitException occured");
-			e.printStackTrace();
-		}
-		    
+	private void openFileOn(MouseEvent event) {
+		Point pt = new Point(event.x, event.y);
+        TableItem item = table.getItem(pt);
+        if (item == null)
+      	  return;
+        
+        for (int i = 0; i < titles.length; i++) {
+      	  Rectangle rect = item.getBounds(i);
+      	  
+      	  if (rect.contains(pt)) {
+      		  int index = table.indexOf(item);
+      		  if (i == 0) {
+      			  System.out.println("Item " + index + "-" + i);
+	        		  System.out.println("filename: " + item.getText(0));
+	        		  System.out.println("projectname: " + item.getText(1));
+	        		  
+	        		  for (PropertyFile file : files) {
+	        			  if (file.getName().equals(item.getText(0)) && file.getProjectName().equals(item.getText(1))) {
+	        				  file.open();
+	        			  }
+	        		  }
+      		  }
+      		  
+      		  
+      	  }
+        }
+        
+        System.out.println("Double clicked");
 	}
+	
+	
 	
 }
