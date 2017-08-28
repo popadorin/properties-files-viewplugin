@@ -6,7 +6,6 @@ import org.eclipse.ui.part.ViewPart;
 
 import com.dorin.composites.PropertiesFilesComposite;
 
-
 public class PropertiesFilesView extends ViewPart {
 	
 	private PropertiesFilesComposite composite;

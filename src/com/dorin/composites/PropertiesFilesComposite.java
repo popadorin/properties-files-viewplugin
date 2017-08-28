@@ -94,7 +94,7 @@ public class PropertiesFilesComposite extends Composite {
 		
 	  	Rectangle rect = item.getBounds(0);
 	  
-	  	if (rect.contains(pt)) {       		  
+	  	if (rect.contains(pt)) {  
 			for (PropertiesFile file : files) {
 				if (selectedItemIsFile(item, file)) {
 					try {
@@ -111,7 +111,7 @@ public class PropertiesFilesComposite extends Composite {
 	
 	private boolean selectedItemIsFile(TableItem item, PropertiesFile file) {
 		return file.getName().equals(item.getText(0)) && 
-				file.getProjectName().equals(item.getText(1));
+				file.getProjectName().equals(item.getText(2));
 	}
 	
 	
