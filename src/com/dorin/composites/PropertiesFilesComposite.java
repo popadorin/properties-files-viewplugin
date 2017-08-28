@@ -16,6 +16,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
+import org.eclipse.ui.PartInitException;
 
 import com.dorin.models.PropertiesFile;
 import org.eclipse.swt.layout.FillLayout;
@@ -96,7 +97,12 @@ public class PropertiesFilesComposite extends Composite {
 	  	if (rect.contains(pt)) {       		  
 			for (PropertiesFile file : files) {
 				if (selectedItemIsFile(item, file)) {
-					file.open();
+					try {
+						file.open();
+					} catch (PartInitException e) {
+						System.out.println("Failed to open file: " + file.getName());
+						e.printStackTrace();
+					}
 				}
 			}
 	  	}

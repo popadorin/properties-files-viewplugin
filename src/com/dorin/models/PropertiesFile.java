@@ -25,15 +25,9 @@ public class PropertiesFile {
 		this.projectName = resource.getProject().getName();
 	}
 
-	public void open() {
+	public void open() throws PartInitException {
 	    IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-	    try {
-			IDE.openEditor(page, file);
-		} catch (PartInitException e) {
-			System.out.println("The partInitException occured");
-			e.printStackTrace();
-		}
-		    
+	    IDE.openEditor(page, file);
 	} 
 	
 	public IFile getFile() {

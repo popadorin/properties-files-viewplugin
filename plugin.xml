@@ -5,13 +5,13 @@
    <extension
          point="org.eclipse.ui.views">
       <category
-            name=" my Hello World category"
-            id="com.dorin.myplugin.view.mycategory">
+            name="Properties Files"
+            id="com.dorin.myplugin.view.categories.propertiesfiles">
       </category>
       <view
-            name="My hello world view"
-            icon="icons/sample.gif"
-            category="com.dorin.myplugin.view.mycategory"
+            name="Properties Files"
+            icon="icons/propertiesfiles_16x16.png"
+            category="com.dorin.myplugin.view.categories.propertiesfiles"
             class="com.dorin.myplugin.views.PropertiesFilesView"
             id="com.dorin.myplugin.view.myview">
       </view>
