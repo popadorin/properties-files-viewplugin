@@ -44,7 +44,7 @@ public class PropertiesFilesComposite extends Composite {
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
 		
-		titles = new String[] {"File name", "Project"};
+		titles = new String[] {"File name", "Path (project-relative)", "Project"};
 	    for (int i = 0; i < titles.length; i++) {
 	      TableColumn column = new TableColumn(table, SWT.NONE);
 	      column.setText(titles[i]);
@@ -53,7 +53,8 @@ public class PropertiesFilesComposite extends Composite {
 	    for (int i = 0; i < files.size(); i++) {
 	        TableItem item = new TableItem(table, SWT.NONE);
 	        item.setText(0, files.get(i).getName());
-	        item.setText(1, files.get(i).getProjectName());
+	        item.setText(1, files.get(i).getProjectRelativePath());
+	        item.setText(2, files.get(i).getProjectName());
 	    }
 	    
 	    for (int i = 0; i < titles.length; i++) {

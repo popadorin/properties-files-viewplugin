@@ -10,6 +10,7 @@ import org.eclipse.ui.ide.IDE;
 public class PropertiesFile {
 	private IFile file;
 	private String name;
+	private String projectRelativePath;
 	private String projectName;
 	
 	public PropertiesFile(String name, String projectName) {
@@ -20,6 +21,7 @@ public class PropertiesFile {
 	public PropertiesFile(IResource resource) {
 		this.file = (IFile) resource;
 		this.name = resource.getName();
+		this.projectRelativePath = "" + resource.getProjectRelativePath();
 		this.projectName = resource.getProject().getName();
 	}
 
@@ -40,6 +42,10 @@ public class PropertiesFile {
 	
 	public String getName() {
 		return name;
+	}
+	
+	public String getProjectRelativePath() {
+		return projectRelativePath;
 	}
 
 	public String getProjectName() {
