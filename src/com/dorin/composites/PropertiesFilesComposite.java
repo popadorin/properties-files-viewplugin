@@ -10,40 +10,29 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 
-import com.dorin.models.PropertyFile;
+import com.dorin.models.PropertiesFile;
+import org.eclipse.swt.layout.FillLayout;
 
-public class MyComposite extends Composite {
+public class PropertiesFilesComposite extends Composite {
 	private Table table;
 	private String[] titles;
-	private List<PropertyFile> files = new ArrayList<>();
+	private List<PropertiesFile> files = new ArrayList<>();
 	/**
 	 * Create the composite.
 	 * @param parent
 	 * @param style
 	 */
-	public MyComposite(Composite parent, int style) {
+	public PropertiesFilesComposite(Composite parent, int style) {
 		super(parent, style);
 		loadFiles();
-		
-		Button btnNewButton = new Button(this, SWT.NONE);
-		btnNewButton.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				
-			}
-		});
-		btnNewButton.setBounds(10, 25, 75, 25);
-		btnNewButton.setText("New file");
+		setLayout(new FillLayout(SWT.HORIZONTAL));
 		
 		table = new Table(this, SWT.MULTI | SWT.BORDER | SWT.FULL_SELECTION);
 		table.addMouseListener(new MouseAdapter() {
@@ -52,11 +41,8 @@ public class MyComposite extends Composite {
 				openFileOn(event);
 			}
 		});
-		
-		table.setBounds(10, 56, 100, 200);
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
-		
 		
 		titles = new String[] {"File name", "Project"};
 	    for (int i = 0; i < titles.length; i++) {
@@ -72,9 +58,7 @@ public class MyComposite extends Composite {
 	    
 	    for (int i = 0; i < titles.length; i++) {
 	        table.getColumn(i).pack();
-	    }   
-		
-	    table.setSize(table.computeSize(SWT.DEFAULT, 200));
+	    }
 	
 	}
 
@@ -86,11 +70,7 @@ public class MyComposite extends Composite {
 				@Override
 				public boolean visit(IResource resource) throws CoreException {
 					if (resource.getName().endsWith(".properties")) {
-						files.add(new PropertyFile(resource));
-						
-						System.out.println("resource name: " + resource.getName());
-						System.out.println("resource project: " + resource.getProject());
-						
+						files.add(new PropertiesFile(resource));
 					}
 					
 					return true;
@@ -112,23 +92,20 @@ public class MyComposite extends Composite {
 		
 	  	Rectangle rect = item.getBounds(0);
 	  
-	  	if (rect.contains(pt)) {
-		        		  
-			for (PropertyFile file : files) {
+	  	if (rect.contains(pt)) {       		  
+			for (PropertiesFile file : files) {
 				if (selectedItemIsFile(item, file)) {
 					file.open();
 				}
 			}
-  		  
 	  	}
 
 	}
 	
-	private boolean selectedItemIsFile(TableItem item, PropertyFile file) {
+	private boolean selectedItemIsFile(TableItem item, PropertiesFile file) {
 		return file.getName().equals(item.getText(0)) && 
 				file.getProjectName().equals(item.getText(1));
 	}
-	
 	
 	
 }

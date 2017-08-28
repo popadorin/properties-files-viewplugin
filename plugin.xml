@@ -12,7 +12,7 @@
             name="My hello world view"
             icon="icons/sample.gif"
             category="com.dorin.myplugin.view.mycategory"
-            class="com.dorin.myplugin.views.SampleView"
+            class="com.dorin.myplugin.views.PropertiesFilesView"
             id="com.dorin.myplugin.view.myview">
       </view>
    </extension>

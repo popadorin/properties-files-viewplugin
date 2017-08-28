@@ -7,17 +7,17 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.ide.IDE;
 
-public class PropertyFile {
+public class PropertiesFile {
 	private IFile file;
 	private String name;
 	private String projectName;
 	
-	public PropertyFile(String name, String projectName) {
+	public PropertiesFile(String name, String projectName) {
 		this.name = name;
 		this.projectName = projectName;
 	}
 	
-	public PropertyFile(IResource resource) {
+	public PropertiesFile(IResource resource) {
 		this.file = (IFile) resource;
 		this.name = resource.getName();
 		this.projectName = resource.getProject().getName();
